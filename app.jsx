@@ -107,24 +107,11 @@ function useRoute(){
   return [route, go];
 }
 
-function Nav({route, go, onHamburger}){
+function Nav(){
   return (
     <header className="nav">
       <div className="container nav-inner">
-        <a onClick={()=>go("home")} style={{cursor:"pointer"}}>
-          <Logo inverse/>
-        </a>
-        <nav className="nav-links">
-          {PAGES.slice(1,6).map(p=> (
-            <a key={p.id} className={"nav-link"+(route===p.id?" active":"")} onClick={()=>go(p.id)}>{p.label}</a>
-          ))}
-          <a className={"nav-link"+(route==="donate"?" active":"")} onClick={()=>go("donate")}>Donate</a>
-        </nav>
-        <div className="nav-ctas">
-          <button className="btn btn-ghost btn-sm" onClick={()=>go("petition")}>Sign the Petition</button>
-          <button className="btn btn-primary btn-sm" onClick={()=>go("donate")}>Donate</button>
-        </div>
-        <button className="hamburger" onClick={onHamburger} aria-label="Menu"><Icon.Menu/></button>
+        <Logo inverse/>
       </div>
     </header>
   );
@@ -148,11 +135,10 @@ function MobileMenu({open, close, go}){
   );
 }
 
-function Footer({go}){
-  const year = 2026;
+function Footer(){
   return (
     <footer className="footer">
-      <div className="container footer-grid">
+      <div className="container footer-grid" style={{gridTemplateColumns:"1.4fr 1fr"}}>
         <div>
           <div style={{display:"flex",alignItems:"center",gap:12}}>
             <Shield size={34} color="#fff"/>
@@ -162,10 +148,6 @@ function Footer({go}){
           </div>
           <p className="tagline" style={{marginTop:18}}>An independent, grassroots campaign holding the $52 billion National Disability Insurance Scheme accountable — funded by everyday Australians.</p>
           <p className="abn">NDIS Exposed is a campaign of Teller Consulting Group Pty Ltd.<br/>ABN 00 000 000 000 · PO Box 000, Sydney NSW 2000</p>
-        </div>
-        <div>
-          <h4>Navigate</h4>
-          {PAGES.map(p=> <a key={p.id} onClick={()=>go(p.id)}>{p.label}</a>)}
         </div>
         <div>
           <h4>Follow & Subscribe</h4>
@@ -994,36 +976,12 @@ function ShareFab(){
 
 // ---------- Root ----------
 function App(){
-  const [route, go] = useRoute();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [count, setCount] = usePetitionCounter();
-  const bump = ()=> setCount(c=> c+1);
-
-  let Page;
-  switch(route){
-    case "investigations": Page = <InvestigationsPage go={go}/>; break;
-    case "mission":        Page = <MissionPage go={go}/>; break;
-    case "team":           Page = <TeamPage/>; break;
-    case "tour":           Page = <TourPage/>; break;
-    case "petition":       Page = <PetitionPage go={go} count={count} bumpCount={bump}/>; break;
-    case "donate":         Page = <DonatePage/>; break;
-    case "tipoff":         Page = <TipOffPage/>; break;
-    case "press":          Page = <PressPage/>; break;
-    case "contact":        Page = <ContactPage/>; break;
-    default:               Page = <HomePage go={go} count={count}/>;
-  }
-
   return (
     <>
-      <Nav route={route} go={go} onHamburger={()=>setMenuOpen(true)}/>
-      <MobileMenu open={menuOpen} close={()=>setMenuOpen(false)} go={go}/>
-      <main>{Page}</main>
-      <Footer go={go}/>
+      <Nav/>
+      <main><DonatePage/></main>
+      <Footer/>
       <ShareFab/>
-      <div className="stickybar">
-        <button className="btn btn-secondary" onClick={()=>go("petition")}>Sign</button>
-        <button className="btn btn-primary" onClick={()=>go("donate")}>Donate</button>
-      </div>
     </>
   );
 }
