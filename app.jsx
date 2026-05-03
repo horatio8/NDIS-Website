@@ -53,11 +53,11 @@ const TOUR_CITIES = [
 ];
 
 const LADDER = [
-  { amt: 25,  desc: "One hour of investigation research" },
-  { amt: 50,  desc: "Funds a Freedom of Information request" },
-  { amt: 100, desc: "One day of video production" },
-  { amt: 500, desc: "Private security on one investigation day" },
-  { amt: 1000,desc: "A complete interstate investigation trip" },
+  { amt: 25,  desc: "One hour of investigation research",        once: "https://buy.stripe.com/5kQ5kCeNge9d6Yz5FCbV60a", monthly: "https://buy.stripe.com/00w00idJc5CH5Uvd84bV60f" },
+  { amt: 50,  desc: "Funds a Freedom of Information request",    once: "https://buy.stripe.com/28E7sKeNgghl82DfgcbV60b", monthly: "https://buy.stripe.com/3cIdR8cF8fdhciT4BybV60g" },
+  { amt: 100, desc: "One day of video production",               once: "https://buy.stripe.com/5kQfZgdJcaX1aaL8RObV60c", monthly: "https://buy.stripe.com/14A28qax0c156Yz9VSbV60h" },
+  { amt: 500, desc: "Private security on one investigation day", once: "https://buy.stripe.com/28EaEW8oS1mr5Uv3xubV60d", monthly: "https://buy.stripe.com/bJe28qdJc8OTciT5FCbV60i" },
+  { amt: 1000,desc: "A complete interstate investigation trip",  once: "https://buy.stripe.com/14A4gydJc5CH4QrgkgbV60e", monthly: "https://buy.stripe.com/8x29AS6gK8OTdmX2tqbV60j" },
 ];
 
 const TICKER = [
@@ -678,6 +678,9 @@ function PetitionPage({go, count, bumpCount}){
 
 function DonatePage(){
   const [sel, setSel] = useState(100);
+  const [monthly, setMonthly] = useState(true);
+  const tier = LADDER.find(r=>r.amt===sel) || LADDER[2];
+  const checkoutUrl = monthly ? tier.monthly : tier.once;
   return (
     <>
       <div className="page-head">
@@ -710,25 +713,18 @@ function DonatePage(){
           </div>
 
           <div className="donorbox">
-            <div className="tag">[ DONORBOX EMBED ]</div>
+            <div className="tag">[ SECURE CHECKOUT · STRIPE ]</div>
             <div style={{marginTop:14,background:"#fff",border:"1px solid var(--line)",borderRadius:6,padding:22}}>
               <div className="label">Amount</div>
               <div style={{display:"flex",alignItems:"baseline",gap:10}}>
                 <div style={{fontFamily:"'Archivo Black',sans-serif",fontSize:44,color:"var(--ink)"}}>${sel}</div>
-                <div style={{color:"var(--slate)",fontSize:13}}>AUD</div>
+                <div style={{color:"var(--slate)",fontSize:13}}>AUD{monthly?" / month":""}</div>
               </div>
-              <div style={{marginTop:14,display:"grid",gap:12}}>
-                <div>
-                  <label className="label">Card number</label>
-                  <input placeholder="4242 4242 4242 4242"/>
-                </div>
-                <div className="row2">
-                  <div><label className="label">Expiry</label><input placeholder="MM/YY"/></div>
-                  <div><label className="label">CVC</label><input placeholder="123"/></div>
-                </div>
-                <label className="check"><input type="checkbox" defaultChecked/><span>Make this a monthly donation</span></label>
-                <button className="btn btn-primary btn-lg" onClick={(e)=>{e.preventDefault(); alert("This is a prototype. DonorBox embed goes here on production.");}}>Give ${sel}</button>
-                <p style={{color:"var(--slate)",fontSize:12,margin:0,textAlign:"center"}}>Secured via DonorBox · Tax-deductibility pending DGR status</p>
+              <div style={{color:"var(--slate)",fontSize:13,marginTop:6}}>{tier.desc}</div>
+              <div style={{marginTop:18,display:"grid",gap:14}}>
+                <label className="check"><input type="checkbox" checked={monthly} onChange={e=>setMonthly(e.target.checked)}/><span>Make this a monthly donation</span></label>
+                <a className="btn btn-primary btn-lg" href={checkoutUrl} target="_blank" rel="noopener noreferrer">Give ${sel}{monthly?" / month":""} →</a>
+                <p style={{color:"var(--slate)",fontSize:12,margin:0,textAlign:"center"}}>Secured via Stripe · Card, Apple Pay, Google Pay · Tax-deductibility pending DGR status</p>
               </div>
             </div>
           </div>
