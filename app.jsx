@@ -67,18 +67,20 @@ const LADDER = [
 const STRIPE_LINKS = {
   oneTime: {
     AUD: {
-      35:   "https://buy.stripe.com/5kQ28qgVo8OTfv55FCbV60k",
-      65:   "https://buy.stripe.com/00wdR89sWe9d96H2tqbV60l",
-      265:  "https://buy.stripe.com/6oUaEWax06GL82D1pmbV60m",
-      550:  "https://buy.stripe.com/5kQfZgeNgghler16JGbV60n",
-      1500: "https://buy.stripe.com/6oUdR86gK3uzgz9gkgbV60o",
+      35:     "https://buy.stripe.com/5kQ28qgVo8OTfv55FCbV60k",
+      65:     "https://buy.stripe.com/00wdR89sWe9d96H2tqbV60l",
+      265:    "https://buy.stripe.com/6oUaEWax06GL82D1pmbV60m",
+      550:    "https://buy.stripe.com/5kQfZgeNgghler16JGbV60n",
+      1500:   "https://buy.stripe.com/6oUdR86gK3uzgz9gkgbV60o",
+      custom: "https://buy.stripe.com/8x23cu8oS4yD0Ab0libV60E",
     },
     USD: {
-      35:   "https://buy.stripe.com/4gM28qbB42qver1c40bV60p",
-      65:   "https://buy.stripe.com/7sYdR820ue9dciT3xubV60q",
-      265:  "https://buy.stripe.com/00w3cufRk0in5Uv6JGbV60r",
-      550:  "https://buy.stripe.com/28EaEW34y6GLdmX8RObV60s",
-      1500: "https://buy.stripe.com/7sY00i34yfdhciT2tqbV60t",
+      35:     "https://buy.stripe.com/4gM28qbB42qver1c40bV60p",
+      65:     "https://buy.stripe.com/7sYdR820ue9dciT3xubV60q",
+      265:    "https://buy.stripe.com/00w3cufRk0in5Uv6JGbV60r",
+      550:    "https://buy.stripe.com/28EaEW34y6GLdmX8RObV60s",
+      1500:   "https://buy.stripe.com/7sY00i34yfdhciT2tqbV60t",
+      custom: "https://buy.stripe.com/dRmaEW20ufdh2Ij9VSbV60F",
     },
   },
   monthly: {
@@ -681,16 +683,29 @@ function DonatePage(){
   const [sel, setSel] = useState(265);
   const [currency, setCurrency] = useState("AUD");
   const [frequency, setFrequency] = useState("oneTime");
+  const isCustom = sel === "custom";
 
-  const checkoutUrl = (STRIPE_LINKS[frequency] && STRIPE_LINKS[frequency][currency] && STRIPE_LINKS[frequency][currency][sel]) || "";
+  const checkoutUrl = isCustom
+    ? STRIPE_LINKS.oneTime[currency].custom
+    : (STRIPE_LINKS[frequency] && STRIPE_LINKS[frequency][currency] && STRIPE_LINKS[frequency][currency][sel]) || "";
 
   function handleDonate(e){
     e.preventDefault();
     if(!checkoutUrl){
-      alert("Stripe Payment Link not yet configured for $"+sel+" "+currency+" "+(frequency==="monthly"?"monthly":"one-time")+".\n\nAdd the URL to STRIPE_LINKS in app.jsx.");
+      alert("Stripe Payment Link not yet configured for this option.");
       return;
     }
     window.location.href = checkoutUrl;
+  }
+
+  function pickCustom(){
+    setSel("custom");
+    if(frequency !== "oneTime") setFrequency("oneTime");
+  }
+
+  function pickFrequency(f){
+    if(f === "monthly" && isCustom) setSel(265);
+    setFrequency(f);
   }
 
   const Toggle = ({value, onChange, options}) => (
@@ -726,6 +741,10 @@ function DonatePage(){
                   <div className="desc">{r.desc}</div>
                 </button>
               ))}
+              <button className={"rung rung-custom"+(isCustom?" sel":"")} onClick={pickCustom}>
+                <div className="amt"><span className="glyph">$</span>Custom</div>
+                <div className="desc">Pick your own amount on the next page</div>
+              </button>
             </div>
             <div style={{marginTop:18}}>
               <Ticker/>
@@ -741,18 +760,23 @@ function DonatePage(){
             </div>
             <div style={{marginBottom:16}}>
               <label className="label">Frequency</label>
-              <Toggle value={frequency} onChange={setFrequency} options={[
+              <Toggle value={frequency} onChange={pickFrequency} options={[
                 {value:"oneTime",label:"One-time"},{value:"monthly",label:"Monthly"}
               ]}/>
+              {isCustom && <p style={{color:"var(--slate)",fontSize:12,margin:"8px 0 0"}}>Custom amounts are one-time only.</p>}
             </div>
             <div style={{background:"#fff",border:"1px solid var(--line)",borderRadius:6,padding:22}}>
               <div className="label">Amount</div>
-              <div style={{display:"flex",alignItems:"baseline",gap:10}}>
-                <div style={{fontFamily:"'Archivo Black',sans-serif",fontSize:44,color:"var(--ink)"}}>${sel}</div>
+              <div style={{display:"flex",alignItems:"baseline",gap:10,fontVariantNumeric:"tabular-nums"}}>
+                <div style={{fontFamily:"'Archivo Black',sans-serif",fontSize:44,color:"var(--ink)",lineHeight:1}}>
+                  {isCustom ? "Custom" : `$${sel}`}
+                </div>
                 <div style={{color:"var(--slate)",fontSize:13}}>{currency}{frequency==="monthly"?" / month":""}</div>
               </div>
               <button className="btn btn-primary btn-lg" onClick={handleDonate} style={{width:"100%",marginTop:16}}>
-                Donate ${sel} {currency}{frequency==="monthly"?" / month":""}
+                {isCustom
+                  ? `Donate ${currency} →`
+                  : `Donate $${sel} ${currency}${frequency==="monthly"?" / month":""}`}
               </button>
               <p style={{color:"var(--slate)",fontSize:12,margin:"12px 0 0",textAlign:"center"}}>Secure checkout powered by Stripe · Tax-deductibility pending DGR status</p>
             </div>
