@@ -61,39 +61,40 @@ const LADDER = [
 ];
 
 // Stripe Payment Links — generated via Stripe MCP. Live mode.
-// One link per amount × currency × frequency. submit_type=donate
-// (URL is donate.stripe.com), redirects to /#thankyou on success.
+// One link per amount × currency × frequency. submit_type=auto so the
+// product name "NDIS Exposed Donation" displays at the top of the
+// Stripe-hosted page. Redirects to /#thankyou on success.
 const STRIPE_LINKS = {
   oneTime: {
     AUD: {
-      35:   "https://donate.stripe.com/5kQ28qgVo8OTfv55FCbV60k",
-      65:   "https://donate.stripe.com/00wdR89sWe9d96H2tqbV60l",
-      265:  "https://donate.stripe.com/6oUaEWax06GL82D1pmbV60m",
-      550:  "https://donate.stripe.com/5kQfZgeNgghler16JGbV60n",
-      1500: "https://donate.stripe.com/6oUdR86gK3uzgz9gkgbV60o",
+      35:   "https://buy.stripe.com/5kQ28qgVo8OTfv55FCbV60k",
+      65:   "https://buy.stripe.com/00wdR89sWe9d96H2tqbV60l",
+      265:  "https://buy.stripe.com/6oUaEWax06GL82D1pmbV60m",
+      550:  "https://buy.stripe.com/5kQfZgeNgghler16JGbV60n",
+      1500: "https://buy.stripe.com/6oUdR86gK3uzgz9gkgbV60o",
     },
     USD: {
-      35:   "https://donate.stripe.com/4gM28qbB42qver1c40bV60p",
-      65:   "https://donate.stripe.com/7sYdR820ue9dciT3xubV60q",
-      265:  "https://donate.stripe.com/00w3cufRk0in5Uv6JGbV60r",
-      550:  "https://donate.stripe.com/28EaEW34y6GLdmX8RObV60s",
-      1500: "https://donate.stripe.com/7sY00i34yfdhciT2tqbV60t",
+      35:   "https://buy.stripe.com/4gM28qbB42qver1c40bV60p",
+      65:   "https://buy.stripe.com/7sYdR820ue9dciT3xubV60q",
+      265:  "https://buy.stripe.com/00w3cufRk0in5Uv6JGbV60r",
+      550:  "https://buy.stripe.com/28EaEW34y6GLdmX8RObV60s",
+      1500: "https://buy.stripe.com/7sY00i34yfdhciT2tqbV60t",
     },
   },
   monthly: {
     AUD: {
-      35:   "https://donate.stripe.com/aFa5kC9sWc15ciTc40bV60u",
-      65:   "https://donate.stripe.com/aFa4gy34y9SX5Uv9VSbV60v",
-      265:  "https://donate.stripe.com/28E7sKeNg9SX6Yzec8bV60w",
-      550:  "https://donate.stripe.com/cNi28q6gK8OT96HfgcbV60x",
-      1500: "https://donate.stripe.com/14AcN4eNg1mrdmX2tqbV60y",
+      35:   "https://buy.stripe.com/aFa5kC9sWc15ciTc40bV60u",
+      65:   "https://buy.stripe.com/aFa4gy34y9SX5Uv9VSbV60v",
+      265:  "https://buy.stripe.com/28E7sKeNg9SX6Yzec8bV60w",
+      550:  "https://buy.stripe.com/cNi28q6gK8OT96HfgcbV60x",
+      1500: "https://buy.stripe.com/14AcN4eNg1mrdmX2tqbV60y",
     },
     USD: {
-      35:   "https://donate.stripe.com/fZu00iax00in6Yz4BybV60z",
-      65:   "https://donate.stripe.com/cNiaEWeNg4yDfv57NKbV60A",
-      265:  "https://donate.stripe.com/3cI3cu9sWaX1dmX9VSbV60B",
-      550:  "https://donate.stripe.com/dRm4gy8oSe9dfv5aZWbV60C",
-      1500: "https://donate.stripe.com/7sY8wOdJc8OT1Ef0libV60D",
+      35:   "https://buy.stripe.com/fZu00iax00in6Yz4BybV60z",
+      65:   "https://buy.stripe.com/cNiaEWeNg4yDfv57NKbV60A",
+      265:  "https://buy.stripe.com/3cI3cu9sWaX1dmX9VSbV60B",
+      550:  "https://buy.stripe.com/dRm4gy8oSe9dfv5aZWbV60C",
+      1500: "https://buy.stripe.com/7sY8wOdJc8OT1Ef0libV60D",
     },
   },
 };
