@@ -152,29 +152,14 @@ function MobileMenu({open, close, go}){
 function Footer(){
   return (
     <footer className="footer">
-      <div className="container footer-grid" style={{gridTemplateColumns:"1.4fr 1fr"}}>
-        <div>
-          <div style={{display:"flex",alignItems:"center",gap:12}}>
-            <Shield size={34} color="#fff"/>
-            <div style={{fontFamily:"'Archivo',sans-serif",fontWeight:900,color:"#fff",letterSpacing:"-0.01em",fontSize:20,lineHeight:1}}>
-              ndis<br/><span style={{fontSize:11,letterSpacing:".22em"}}>EXPOSED</span>
-            </div>
+      <div className="container">
+        <div style={{display:"flex",alignItems:"center",gap:12}}>
+          <Shield size={34} color="#fff"/>
+          <div style={{fontFamily:"'Archivo',sans-serif",fontWeight:900,color:"#fff",letterSpacing:"-0.01em",fontSize:20,lineHeight:1}}>
+            ndis<br/><span style={{fontSize:11,letterSpacing:".22em"}}>EXPOSED</span>
           </div>
-          <p className="tagline" style={{marginTop:18}}>An independent, grassroots campaign holding the $52 billion National Disability Insurance Scheme accountable — funded by everyday Australians.</p>
-          <p className="abn">NDIS Exposed is a campaign of Teller Consulting Group Pty Ltd.<br/>ABN 00 000 000 000 · PO Box 000, Sydney NSW 2000</p>
         </div>
-        <div>
-          <h4>Follow & Subscribe</h4>
-          <div className="soc">
-            <a title="YouTube"><Icon.YT/></a>
-            <a title="Instagram"><Icon.IG/></a>
-            <a title="TikTok"><Icon.TT/></a>
-            <a title="Facebook"><Icon.FB/></a>
-            <a title="X"><Icon.X/></a>
-          </div>
-          <h4 style={{marginTop:24}}>Newsletter</h4>
-          <NewsletterInline/>
-        </div>
+        <p className="tagline" style={{marginTop:18}}>An independent, grassroots campaign holding the $52 billion National Disability Insurance Scheme accountable — funded by everyday Australians.</p>
       </div>
       <div className="container foot-bottom">
         <div>© Teller Consulting 2026 · All rights reserved.</div>
@@ -710,7 +695,7 @@ function DonatePage(){
         </div>
       </div>
       <section className="section">
-        <div className="container" style={{display:"grid",gridTemplateColumns:"1.1fr .9fr",gap:40,alignItems:"start"}}>
+        <div className="container donate-grid">
           <div style={{minWidth:0}}>
             <div className="eyebrow">Impact ladder</div>
             <h2 className="heading" style={{fontSize:26,margin:"8px 0 18px"}}>Choose what your gift funds.</h2>
@@ -727,7 +712,7 @@ function DonatePage(){
             </div>
           </div>
 
-          <div style={{background:"var(--offwhite)",border:"1px solid var(--line)",borderRadius:6,padding:28}}>
+          <div className="donate-panel">
             <div style={{marginBottom:16}}>
               <label className="label">Currency</label>
               <Toggle value={currency} onChange={setCurrency} options={[
