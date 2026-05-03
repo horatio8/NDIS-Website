@@ -85,18 +85,18 @@ const STRIPE_LINKS = {
   },
   monthly: {
     AUD: {
-      35:   "https://buy.stripe.com/aFa5kC9sWc15ciTc40bV60u",
-      65:   "https://buy.stripe.com/aFa4gy34y9SX5Uv9VSbV60v",
-      265:  "https://buy.stripe.com/28E7sKeNg9SX6Yzec8bV60w",
-      550:  "https://buy.stripe.com/cNi28q6gK8OT96HfgcbV60x",
-      1500: "https://buy.stripe.com/14AcN4eNg1mrdmX2tqbV60y",
+      35:   "https://buy.stripe.com/00w6oGcF8c15ciTaZWbV60G",
+      65:   "https://buy.stripe.com/8x200ieNg7KPer18RObV60H",
+      265:  "https://buy.stripe.com/eVqdR87kO7KPaaL0libV60I",
+      550:  "https://buy.stripe.com/eVq8wOeNgfdhdmX9VSbV60J",
+      1500: "https://buy.stripe.com/00wdR8ax02qvciTgkgbV60K",
     },
     USD: {
-      35:   "https://buy.stripe.com/fZu00iax00in6Yz4BybV60z",
-      65:   "https://buy.stripe.com/cNiaEWeNg4yDfv57NKbV60A",
-      265:  "https://buy.stripe.com/3cI3cu9sWaX1dmX9VSbV60B",
-      550:  "https://buy.stripe.com/dRm4gy8oSe9dfv5aZWbV60C",
-      1500: "https://buy.stripe.com/7sY8wOdJc8OT1Ef0libV60D",
+      35:   "https://buy.stripe.com/5kQ4gyfRk4yDdmXfgcbV60L",
+      65:   "https://buy.stripe.com/4gM7sKax0e9d0Ab9VSbV60M",
+      265:  "https://buy.stripe.com/fZucN4bB4c153Mn3xubV60N",
+      550:  "https://buy.stripe.com/8x2cN4bB4e9d82D2tqbV60O",
+      1500: "https://buy.stripe.com/fZuaEW9sWaX1ciT9VSbV60P",
     },
   },
 };
