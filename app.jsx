@@ -803,7 +803,7 @@ function ThankYouPage(){
             <div className="check-ico"><Icon.Check/></div>
             <h2 className="heading" style={{fontSize:26,margin:0}}>Welcome to the fight.</h2>
             <p style={{color:"var(--slate)",marginTop:8,marginBottom:0}}>
-              100% of your gift goes to investigations, legal costs and production. Every dollar is tracked to a line item and reported every 30 days.
+              100% of your gift goes to investigations, legal costs and production.
             </p>
             <div className="share-row">
               <a className="btn btn-secondary" href="#">Make another donation</a>
