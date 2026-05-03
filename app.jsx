@@ -53,12 +53,26 @@ const TOUR_CITIES = [
 ];
 
 const LADDER = [
-  { amt: 25,  desc: "One hour of investigation research" },
-  { amt: 50,  desc: "Funds a Freedom of Information request" },
-  { amt: 100, desc: "One day of video production" },
-  { amt: 500, desc: "Private security on one investigation day" },
-  { amt: 1000,desc: "A complete interstate investigation trip" },
+  { amt: 35,   desc: "One hour of investigation research" },
+  { amt: 65,   desc: "Funds a Freedom of Information request" },
+  { amt: 265,  desc: "One day of video production" },
+  { amt: 550,  desc: "Private security on one investigation day" },
+  { amt: 1500, desc: "A complete interstate investigation trip" },
 ];
+
+// Stripe Payment Links — create one in your Stripe Dashboard
+// (Payment Links → New) for each amount × currency × frequency,
+// then paste the URLs below. Docs: https://stripe.com/docs/payment-links
+const STRIPE_LINKS = {
+  oneTime: {
+    AUD: { 35: "", 65: "", 265: "", 550: "", 1500: "" },
+    USD: { 35: "", 65: "", 265: "", 550: "", 1500: "" },
+  },
+  monthly: {
+    AUD: { 35: "", 65: "", 265: "", 550: "", 1500: "" },
+    USD: { 35: "", 65: "", 265: "", 550: "", 1500: "" },
+  },
+};
 
 const TICKER = [
   { who: "Margaret, 68 — Ballarat VIC", msg: "This is the fight my daughter deserves." },
@@ -659,7 +673,33 @@ function PetitionPage({go, count, bumpCount}){
 }
 
 function DonatePage(){
-  const [sel, setSel] = useState(100);
+  const [sel, setSel] = useState(265);
+  const [currency, setCurrency] = useState("AUD");
+  const [frequency, setFrequency] = useState("oneTime");
+
+  const checkoutUrl = (STRIPE_LINKS[frequency] && STRIPE_LINKS[frequency][currency] && STRIPE_LINKS[frequency][currency][sel]) || "";
+
+  function handleDonate(e){
+    e.preventDefault();
+    if(!checkoutUrl){
+      alert("Stripe Payment Link not yet configured for $"+sel+" "+currency+" "+(frequency==="monthly"?"monthly":"one-time")+".\n\nAdd the URL to STRIPE_LINKS in app.jsx.");
+      return;
+    }
+    window.location.href = checkoutUrl;
+  }
+
+  const Toggle = ({value, onChange, options}) => (
+    <div style={{display:"flex",gap:8}}>
+      {options.map(o=>(
+        <button key={o.value} type="button" onClick={()=>onChange(o.value)}
+          className={"btn "+(value===o.value?"btn-primary":"btn-secondary")}
+          style={{flex:1,height:44}}>
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
+
   return (
     <>
       <div className="page-head">
@@ -682,36 +722,34 @@ function DonatePage(){
                 </button>
               ))}
             </div>
-            <div className="transparency">
-              <strong>Transparency commitment</strong>
-              <p>Every dollar is tracked to a line item. Every KPI is reported every 30 days. See the latest financials and investigation log on our governance page.</p>
-            </div>
             <div style={{marginTop:18}}>
               <Ticker/>
             </div>
           </div>
 
-          <div className="donorbox">
-            <div className="tag">[ DONORBOX EMBED ]</div>
-            <div style={{marginTop:14,background:"#fff",border:"1px solid var(--line)",borderRadius:6,padding:22}}>
+          <div style={{background:"var(--offwhite)",border:"1px solid var(--line)",borderRadius:6,padding:28}}>
+            <div style={{marginBottom:16}}>
+              <label className="label">Currency</label>
+              <Toggle value={currency} onChange={setCurrency} options={[
+                {value:"AUD",label:"AUD"},{value:"USD",label:"USD"}
+              ]}/>
+            </div>
+            <div style={{marginBottom:16}}>
+              <label className="label">Frequency</label>
+              <Toggle value={frequency} onChange={setFrequency} options={[
+                {value:"oneTime",label:"One-time"},{value:"monthly",label:"Monthly"}
+              ]}/>
+            </div>
+            <div style={{background:"#fff",border:"1px solid var(--line)",borderRadius:6,padding:22}}>
               <div className="label">Amount</div>
               <div style={{display:"flex",alignItems:"baseline",gap:10}}>
                 <div style={{fontFamily:"'Archivo Black',sans-serif",fontSize:44,color:"var(--ink)"}}>${sel}</div>
-                <div style={{color:"var(--slate)",fontSize:13}}>AUD</div>
+                <div style={{color:"var(--slate)",fontSize:13}}>{currency}{frequency==="monthly"?" / month":""}</div>
               </div>
-              <div style={{marginTop:14,display:"grid",gap:12}}>
-                <div>
-                  <label className="label">Card number</label>
-                  <input placeholder="4242 4242 4242 4242"/>
-                </div>
-                <div className="row2">
-                  <div><label className="label">Expiry</label><input placeholder="MM/YY"/></div>
-                  <div><label className="label">CVC</label><input placeholder="123"/></div>
-                </div>
-                <label className="check"><input type="checkbox" defaultChecked/><span>Make this a monthly donation</span></label>
-                <button className="btn btn-primary btn-lg" onClick={(e)=>{e.preventDefault(); alert("This is a prototype. DonorBox embed goes here on production.");}}>Give ${sel}</button>
-                <p style={{color:"var(--slate)",fontSize:12,margin:0,textAlign:"center"}}>Secured via DonorBox · Tax-deductibility pending DGR status</p>
-              </div>
+              <button className="btn btn-primary btn-lg" onClick={handleDonate} style={{width:"100%",marginTop:16}}>
+                Donate ${sel} {currency}{frequency==="monthly"?" / month":""}
+              </button>
+              <p style={{color:"var(--slate)",fontSize:12,margin:"12px 0 0",textAlign:"center"}}>Secure checkout powered by Stripe · Tax-deductibility pending DGR status</p>
             </div>
           </div>
         </div>
