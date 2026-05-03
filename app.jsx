@@ -187,12 +187,7 @@ function Footer(){
         <p className="tagline" style={{marginTop:18}}>An independent, grassroots campaign holding the $52 billion National Disability Insurance Scheme accountable — funded by everyday Australians.</p>
       </div>
       <div className="container foot-bottom">
-        <div>© Teller Consulting 2026 · All rights reserved.</div>
-        <div style={{display:"flex",gap:16}}>
-          <a>Privacy Policy</a>
-          <a>Terms</a>
-          <a>Accessibility</a>
-        </div>
+        <div>© NDIS Exposed 2026 · All rights reserved.</div>
       </div>
     </footer>
   );
@@ -473,7 +468,7 @@ function TeamPage(){
   const team = [
     { name:"Drew Pavlou", role:"Founder · Investigations", initials:"DP", bio:"I'm not here to be polite. I've spent the last five years being sued, threatened, and smeared for asking obvious questions. The NDIS is the largest unaudited transfer of public money in Australian history. We're going to put the receipts in front of the country, whether the political class likes it or not. If you care about people with disability, if you care about what this country spends half a trillion dollars on over a decade, you should be furious too. Fury is fuel. Use it."},
     { name:"Pete Zogoulas", role:"Co-Founder · Field Producer", initials:"PZ", bio:"I grew up around this. Family in disability care, friends in the sector, mates who became plan managers and watched the rules get written by the loudest voices in the room. This campaign is for the workers who know something is wrong and can't say it. It's for the parents on hold with the Commission for the fourth time this month. We're building a place where your voice is safe and your evidence actually goes somewhere."},
-    { name:"James Flynn", role:"Director · Teller Consulting Group", initials:"JF", bio:"My job is the boring part — governance, compliance, and making sure every dollar is tracked to a line item. NDIS Exposed runs under formal US/Australian campaign consultancy standards because movements that handle public money without structure don't last. Every 30 days we publish KPIs. Every investigation is reviewed. Every claim is evidenced. That's the deal we make with donors, and it is non-negotiable."},
+    { name:"James Flynn", role:"Director · NDIS Exposed", initials:"JF", bio:"My job is the boring part — governance, compliance, and making sure every dollar is tracked to a line item. NDIS Exposed runs under formal US/Australian campaign consultancy standards because movements that handle public money without structure don't last. Every 30 days we publish KPIs. Every investigation is reviewed. Every claim is evidenced. That's the deal we make with donors, and it is non-negotiable."},
   ];
   return (
     <>
@@ -503,7 +498,7 @@ function TeamPage(){
 
           <div style={{marginTop:56,background:"var(--offwhite)",border:"1px solid var(--line)",borderRadius:6,padding:"28px 32px"}}>
             <div className="eyebrow">Governance</div>
-            <p style={{margin:"8px 0 0",color:"var(--ink)",fontSize:16,lineHeight:1.6}}>This campaign is run with formal governance by <b>Teller Consulting Group Pty Ltd</b>, a US/Australian campaign consultancy. ABN 00 000 000 000. Registered charity review pending. All financials and KPIs are reported publicly every 30 days.</p>
+            <p style={{margin:"8px 0 0",color:"var(--ink)",fontSize:16,lineHeight:1.6}}>This campaign is run by <b>NDIS Exposed</b> under formal US/Australian campaign consultancy standards. ABN 00 000 000 000. Registered charity review pending. All financials and KPIs are reported publicly every 30 days.</p>
           </div>
         </div>
       </section>
@@ -995,7 +990,6 @@ function ContactPage(){
               <div className="eyebrow">Campaign HQ</div>
               <p style={{color:"var(--ink)",fontSize:15,lineHeight:1.7,margin:"8px 0 0"}}>
                 NDIS Exposed<br/>
-                c/- Teller Consulting Group Pty Ltd<br/>
                 PO Box 000, Sydney NSW 2000<br/>
                 Australia
               </p>
