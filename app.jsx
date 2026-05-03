@@ -60,17 +60,41 @@ const LADDER = [
   { amt: 1500, desc: "A complete interstate investigation trip" },
 ];
 
-// Stripe Payment Links — create one in your Stripe Dashboard
-// (Payment Links → New) for each amount × currency × frequency,
-// then paste the URLs below. Docs: https://stripe.com/docs/payment-links
+// Stripe Payment Links — generated via Stripe MCP. Live mode.
+// One link per amount × currency × frequency. submit_type=donate
+// (URL is donate.stripe.com), redirects to /#thankyou on success.
 const STRIPE_LINKS = {
   oneTime: {
-    AUD: { 35: "", 65: "", 265: "", 550: "", 1500: "" },
-    USD: { 35: "", 65: "", 265: "", 550: "", 1500: "" },
+    AUD: {
+      35:   "https://donate.stripe.com/5kQ28qgVo8OTfv55FCbV60k",
+      65:   "https://donate.stripe.com/00wdR89sWe9d96H2tqbV60l",
+      265:  "https://donate.stripe.com/6oUaEWax06GL82D1pmbV60m",
+      550:  "https://donate.stripe.com/5kQfZgeNgghler16JGbV60n",
+      1500: "https://donate.stripe.com/6oUdR86gK3uzgz9gkgbV60o",
+    },
+    USD: {
+      35:   "https://donate.stripe.com/4gM28qbB42qver1c40bV60p",
+      65:   "https://donate.stripe.com/7sYdR820ue9dciT3xubV60q",
+      265:  "https://donate.stripe.com/00w3cufRk0in5Uv6JGbV60r",
+      550:  "https://donate.stripe.com/28EaEW34y6GLdmX8RObV60s",
+      1500: "https://donate.stripe.com/7sY00i34yfdhciT2tqbV60t",
+    },
   },
   monthly: {
-    AUD: { 35: "", 65: "", 265: "", 550: "", 1500: "" },
-    USD: { 35: "", 65: "", 265: "", 550: "", 1500: "" },
+    AUD: {
+      35:   "https://donate.stripe.com/aFa5kC9sWc15ciTc40bV60u",
+      65:   "https://donate.stripe.com/aFa4gy34y9SX5Uv9VSbV60v",
+      265:  "https://donate.stripe.com/28E7sKeNg9SX6Yzec8bV60w",
+      550:  "https://donate.stripe.com/cNi28q6gK8OT96HfgcbV60x",
+      1500: "https://donate.stripe.com/14AcN4eNg1mrdmX2tqbV60y",
+    },
+    USD: {
+      35:   "https://donate.stripe.com/fZu00iax00in6Yz4BybV60z",
+      65:   "https://donate.stripe.com/cNiaEWeNg4yDfv57NKbV60A",
+      265:  "https://donate.stripe.com/3cI3cu9sWaX1dmX9VSbV60B",
+      550:  "https://donate.stripe.com/dRm4gy8oSe9dfv5aZWbV60C",
+      1500: "https://donate.stripe.com/7sY8wOdJc8OT1Ef0libV60D",
+    },
   },
 };
 
@@ -743,6 +767,34 @@ function DonatePage(){
   );
 }
 
+function ThankYouPage(){
+  return (
+    <>
+      <div className="page-head">
+        <div className="container">
+          <div className="eyebrow">Thank you</div>
+          <h1 className="heading">Your donation went through.</h1>
+          <p>You just funded an investigation the media won't touch. A receipt is on its way to your inbox from Stripe.</p>
+        </div>
+      </div>
+      <section className="section">
+        <div className="container" style={{maxWidth:680}}>
+          <div className="thankyou">
+            <div className="check-ico"><Icon.Check/></div>
+            <h2 className="heading" style={{fontSize:26,margin:0}}>Welcome to the fight.</h2>
+            <p style={{color:"var(--slate)",marginTop:8,marginBottom:0}}>
+              100% of your gift goes to investigations, legal costs and production. Every dollar is tracked to a line item and reported every 30 days.
+            </p>
+            <div className="share-row">
+              <a className="btn btn-secondary" href="#">Make another donation</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
 function TipOffPage(){
   const [sent,setSent]=useState(false);
   const [form,setForm]=useState({type:"",desc:"",rel:"",contact:"",files:""});
@@ -999,10 +1051,11 @@ function ShareFab(){
 
 // ---------- Root ----------
 function App(){
+  const [route] = useRoute();
   return (
     <>
       <Nav/>
-      <main><DonatePage/></main>
+      <main>{route === "thankyou" ? <ThankYouPage/> : <DonatePage/>}</main>
       <Footer/>
       <ShareFab/>
     </>
