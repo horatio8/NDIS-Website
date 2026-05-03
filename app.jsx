@@ -691,7 +691,7 @@ function DonatePage(){
         <div className="container">
           <div className="eyebrow">Donate</div>
           <h1 className="heading">Fund the investigations the media won't touch.</h1>
-          <p>100% grassroots. Zero government money. Every dollar tracked to a line item — reported every 30 days.</p>
+          <p>100% grassroots. Zero government money.</p>
         </div>
       </div>
       <section className="section">
