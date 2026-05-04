@@ -127,10 +127,9 @@ function Logo({inverse=false}){
   const c = inverse ? "#fff" : "#DA1333";
   return (
     <div className="nav-logo" aria-label="NDIS Exposed">
-      <Shield size={30} color={c}/>
+      <Shield size={32} color={c}/>
       <div className="wm" style={{color:c}}>
-        ndis
-        <small style={{color:c}}>EXPOSED</small>
+        <span className="brand-strong">NDIS</span> <span className="brand-light">Exposed</span>
       </div>
     </div>
   );

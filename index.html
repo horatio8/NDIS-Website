@@ -51,10 +51,12 @@
   /* Nav */
   .nav{position:sticky;top:0;z-index:60;background:var(--navy);color:#fff;border-bottom:1px solid rgba(255,255,255,.06)}
   .nav-inner{display:flex;align-items:center;gap:18px;height:72px}
-  .nav-logo{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-0.01em;font-family:'Archivo',sans-serif}
-  .nav-logo .mark{width:30px;height:34px;display:grid;place-items:center}
-  .nav-logo .wm{font-size:18px;line-height:1;}
-  .nav-logo .wm small{display:block;font-size:10px;letter-spacing:.22em;font-weight:800;color:#fff;opacity:.85;margin-top:2px}
+  .nav-logo{display:flex;align-items:center;gap:12px;font-family:'Archivo Black','Archivo',sans-serif;letter-spacing:-0.005em}
+  .nav-logo .mark{width:32px;height:36px;display:grid;place-items:center}
+  .nav-logo .wm{font-size:22px;line-height:1;display:flex;align-items:baseline;gap:8px}
+  .nav-logo .wm .brand-strong{font-weight:900}
+  .nav-logo .wm .brand-light{font-family:'Archivo',sans-serif;font-weight:600;letter-spacing:.01em;opacity:.92}
+  @media (max-width:520px){.nav-logo .wm{font-size:19px;gap:6px}}
   .nav-links{display:flex;gap:4px;margin-left:auto}
   .nav-link{padding:10px 12px;font-size:13px;font-weight:600;color:#DDE2F2;border-radius:4px;cursor:pointer;letter-spacing:.02em}
   .nav-link:hover{color:#fff;background:rgba(255,255,255,.06)}
@@ -321,7 +323,7 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
-<script type="text/babel" src="app.jsx?v=11"></script>
+<script type="text/babel" src="app.jsx?v=12"></script>
 
 </body>
 </html>
