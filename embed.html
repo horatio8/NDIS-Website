@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Donate to NDIS Exposed</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --red:#DA1333;
+    --red-dark:#B10E29;
+    --navy:#213875;
+    --ink:#111E42;
+    --slate:#5A5F6C;
+    --offwhite:#F5F5F5;
+    --line:#E4E6EC;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:transparent;color:var(--ink);font-family:Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+  body{padding:12px}
+  button{font-family:inherit;cursor:pointer;border:0;background:transparent}
+
+  .label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--slate);margin-bottom:6px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 16px;border-radius:4px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;font-size:12px;transition:transform .08s ease, background .12s ease, color .12s ease, border-color .12s ease;white-space:nowrap}
+  .btn:active{transform:translateY(1px)}
+  .btn-primary{background:var(--red);color:#fff}
+  .btn-primary:hover{background:var(--red-dark)}
+  .btn-secondary{background:#fff;color:var(--navy);border:2px solid var(--navy)}
+  .btn-secondary:hover{background:var(--navy);color:#fff}
+  .btn-lg{height:54px;font-size:13px}
+
+  .embed-wrap{max-width:480px;margin:0 auto;background:var(--offwhite);border:1px solid var(--line);border-radius:8px;padding:20px}
+
+  .toggle-row{display:flex;gap:8px}
+  .toggle-row .btn{flex:1}
+
+  .ladder{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  @media (max-width:380px){.ladder{grid-template-columns:repeat(2,1fr)}}
+  .rung{border:2px solid var(--line);border-radius:6px;padding:14px 8px;text-align:center;cursor:pointer;background:#fff;transition:border-color .12s ease,background .12s ease}
+  .rung:hover{border-color:var(--navy)}
+  .rung.sel{border-color:var(--red);background:#FFF5F7}
+  .rung .amt{font-family:'Archivo Black',sans-serif;font-size:18px;color:var(--ink);line-height:1}
+
+  .amount-display{background:#fff;border:1px solid var(--line);border-radius:6px;padding:16px 18px;display:flex;align-items:baseline;gap:8px}
+  .amount-display .num{font-family:'Archivo Black',sans-serif;font-size:34px;color:var(--ink);line-height:1}
+  .amount-display .ccy{color:var(--slate);font-size:13px}
+
+  .footnote{color:var(--slate);font-size:11px;margin:10px 0 0;text-align:center}
+  .stack > * + *{margin-top:14px}
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+<script src="donate-config.js?v=1"></script>
+
+<script type="text/babel">
+const { useState } = React;
+const { LADDER, STRIPE_LINKS } = window.DONATE_CONFIG;
+
+function DonateWidget(){
+  const [sel, setSel] = useState(265);
+  const [currency, setCurrency] = useState("AUD");
+  const [frequency, setFrequency] = useState("oneTime");
+  const isCustom = sel === "custom";
+
+  const checkoutUrl = isCustom
+    ? STRIPE_LINKS.oneTime[currency].custom
+    : (STRIPE_LINKS[frequency] && STRIPE_LINKS[frequency][currency] && STRIPE_LINKS[frequency][currency][sel]) || "";
+
+  function handleDonate(e){
+    e.preventDefault();
+    if(!checkoutUrl){
+      alert("Stripe link not configured for this option.");
+      return;
+    }
+    // Break out of the iframe so Stripe checkout takes the full page.
+    try {
+      window.top.location.href = checkoutUrl;
+    } catch(err) {
+      window.open(checkoutUrl, "_top");
+    }
+  }
+
+  function pickCustom(){
+    setSel("custom");
+    if(frequency !== "oneTime") setFrequency("oneTime");
+  }
+
+  function pickFrequency(f){
+    if(f === "monthly" && isCustom) setSel(265);
+    setFrequency(f);
+  }
+
+  const Toggle = ({value, onChange, options}) => (
+    <div className="toggle-row">
+      {options.map(o=>(
+        <button key={o.value} type="button" onClick={()=>onChange(o.value)}
+          className={"btn "+(value===o.value?"btn-primary":"btn-secondary")}>
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
+
+  return (
+    <div className="embed-wrap stack">
+      <div>
+        <label className="label">Currency</label>
+        <Toggle value={currency} onChange={setCurrency} options={[
+          {value:"AUD",label:"AUD"},{value:"USD",label:"USD"}
+        ]}/>
+      </div>
+      <div>
+        <label className="label">Frequency</label>
+        <Toggle value={frequency} onChange={pickFrequency} options={[
+          {value:"oneTime",label:"One-time"},{value:"monthly",label:"Monthly"}
+        ]}/>
+        {isCustom && <p style={{color:"var(--slate)",fontSize:11,margin:"6px 0 0"}}>Custom amounts are one-time only.</p>}
+      </div>
+      <div>
+        <label className="label">Amount</label>
+        <div className="ladder">
+          {LADDER.map(r=>(
+            <button key={r.amt} type="button" className={"rung"+(sel===r.amt?" sel":"")} onClick={()=>setSel(r.amt)}>
+              <div className="amt">${r.amt}</div>
+            </button>
+          ))}
+          <button type="button" className={"rung"+(isCustom?" sel":"")} onClick={pickCustom}>
+            <div className="amt">Custom</div>
+          </button>
+        </div>
+      </div>
+      <div className="amount-display">
+        <span className="num">{isCustom ? "Custom" : `$${sel}`}</span>
+        <span className="ccy">{currency}{frequency==="monthly"?" / month":""}</span>
+      </div>
+      <button type="button" className="btn btn-primary btn-lg" onClick={handleDonate} style={{width:"100%"}}>
+        {isCustom
+          ? `Donate ${currency} →`
+          : `Donate $${sel} ${currency}${frequency==="monthly"?" / month":""}`}
+      </button>
+      <p className="footnote">Secure checkout powered by Stripe</p>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<DonateWidget/>);
+</script>
+
+</body>
+</html>
